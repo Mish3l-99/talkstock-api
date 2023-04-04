@@ -10,7 +10,7 @@ const validDayTime = () => {
   var hour = newDate.getUTCHours();
 
   // from 9 to 4, added 5 cuz hour is in gmt
-  console.log(hour);
+  // console.log(hour);
   if (
     dayName !== "Sunday" &&
     dayName !== "Saturday" &&
@@ -57,7 +57,7 @@ router.post("/update", getVoting, async (req, res) => {
     res.voting.voters_down++;
   }
 
-  console.log(res.voting);
+  // console.log(res.voting);
 
   try {
     const updated = await res.voting.save();

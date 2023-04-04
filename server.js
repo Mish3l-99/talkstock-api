@@ -39,6 +39,10 @@ app.use("/profile", express.static("images/profiles"));
 const votingsRoute = require("./routes/votings");
 app.use("/votings", votingsRoute);
 
+// defining a conversations route and using it
+const conversationsRoute = require("./routes/conversations");
+app.use("/conversations", conversationsRoute);
+
 // defining a messages route and using it
 const messagesRoute = require("./routes/messages");
 app.use("/messages", messagesRoute);
@@ -46,6 +50,7 @@ app.use("/messages", messagesRoute);
 // socket stuff
 const limit = 12;
 const Message = require("./models/message");
+const Conversation = require("./models/conversation");
 
 const storeMessage = async (data) => {
   // test env
@@ -66,6 +71,24 @@ const storeMessage = async (data) => {
   //   } catch (error) {
   //     console.log(error);
   //   }
+};
+
+const storePMessage = async (data) => {
+  // test env
+  const convo = await Conversation.findById(data.room);
+
+  const MssgsNum = convo.messages.length;
+  if (MssgsNum <= 100) {
+    const fullNew = convo.messages.concat(data);
+    console.log(fullNew);
+    convo.messages = fullNew;
+    try {
+      await convo.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //   //   production; nneds work
 };
 
 io.on("connection", (socket) => {
@@ -90,9 +113,27 @@ io.on("connection", (socket) => {
     // console.log("joined ", data);
   });
 
+  socket.on("join_private", async (data) => {
+    socket.join(data);
+    let convo;
+    try {
+      convo = await Conversation.findById(data);
+    } catch (error) {
+      console.log(error);
+    }
+
+    io.to(data).emit("send_private", convo.messages);
+    // console.log("joined ", data);
+  });
+
   socket.on("send_message", async (data) => {
     io.to(data.room).emit("receive_message", data);
     await storeMessage(data);
+  });
+
+  socket.on("send_pMessage", async (data) => {
+    io.to(data.room).emit("receive_message", data);
+    await storePMessage(data);
   });
 });
 

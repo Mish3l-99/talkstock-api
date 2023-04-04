@@ -1,4 +1,4 @@
-GET http://localhost:3000/users/one/641afe1c042f204636d1f2c0
+GET http://localhost:3000/users/one/6421d8ca63fa876ef644dfe0
 
 
 ###
@@ -56,4 +56,14 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/messages/djia_voting
+
+
+# Conversations *************************
+###
+
+GET http://localhost:3000/conversations/hi/fi
+
+###
+
+GET http://localhost:3000/conversations/profile/641c142a84918caba8eb476b
 
