@@ -52,6 +52,21 @@ const limit = 12;
 const Message = require("./models/message");
 const Conversation = require("./models/conversation");
 
+const tobeSaved = (room) => {
+  let ans = false;
+  const ourRooms = [
+    "djia_messages",
+    "sp_messages",
+    "nas_messages",
+    "nashun_messages",
+    "nyse_messages",
+  ];
+  if (ourRooms.includes(room)) {
+    ans = true;
+  }
+  return ans;
+};
+
 const storeMessage = async (data) => {
   // test env
   const MssgsNum = await Message.find({ room: data.room }).countDocuments();
@@ -128,7 +143,9 @@ io.on("connection", (socket) => {
 
   socket.on("send_message", async (data) => {
     io.to(data.room).emit("receive_message", data);
-    await storeMessage(data);
+    if (tobeSaved(data.room)) {
+      await storeMessage(data);
+    }
   });
 
   socket.on("send_pMessage", async (data) => {
