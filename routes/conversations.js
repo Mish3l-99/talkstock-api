@@ -46,9 +46,10 @@ router.get("/profile/:id", async (req, res) => {
       participants: { $all: [id] },
     });
     if (tryFind.length > 0) {
-      const data = tryFind.map((conv) => {
-        const convs = conv.withs.filter((wth) => wth._id !== id)[0];
-        return { conv: conv._id, with: convs };
+      const data = [];
+      tryFind.map((conv) => {
+        const convs = conv.withs.filter((wth) => wth.user !== id)[0];
+        data.push({ conv: conv._id, with: convs });
       });
 
       res.json({ success: true, data });
