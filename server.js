@@ -154,6 +154,10 @@ io.on("connection", (socket) => {
   });
 });
 
+app.get("/backend", async (req, res) => {
+  res.status(200).json({ works: "works!" });
+});
+
 // // defining a content route and using it
 // const contentsRouter = require("./routes/contents");
 // app.use("/content", contentsRouter);
