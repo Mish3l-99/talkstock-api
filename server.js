@@ -42,7 +42,7 @@ app.use("/votings", votingsRoute);
 
 // defining a conversations route and using it
 const conversationsRoute = require("./routes/conversations");
-app.use("/conversations", conversationsRoute);
+app.use("/backend/conversations", conversationsRoute);
 
 // defining a messages route and using it
 const messagesRoute = require("./routes/messages");
