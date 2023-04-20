@@ -12,10 +12,10 @@ var http = require("http").createServer(app);
 // http.use(cors({ origin: OriginAllowed }));
 
 var io = require("socket.io")(http, {
+  path: "/backend/socket.io",
   cors: {
     origin: OriginAllowed,
     methods: ["GET", "POST"],
-    path: "/backend/socket.io",
   },
 });
 //
