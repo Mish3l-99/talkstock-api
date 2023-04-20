@@ -15,6 +15,7 @@ var io = require("socket.io")(http, {
   cors: {
     origin: OriginAllowed,
     methods: ["GET", "POST"],
+    path: "/backend/socket.io",
   },
 });
 //
