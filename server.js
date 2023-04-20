@@ -3,6 +3,7 @@ require("dotenv").config();
 const OriginAllowed = process.env.ORIGIN_ALLOWED;
 
 var express = require("express");
+const router = express.Router();
 var cors = require("cors");
 var app = express();
 // This is to enable CORS for one origin
@@ -154,12 +155,10 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/backend", async (req, res) => {
-  res.status(200).json({ works: "works!" });
-});
-
 // // defining a content route and using it
 // const contentsRouter = require("./routes/contents");
 // app.use("/content", contentsRouter);
+
+app.use("/backend", router);
 
 http.listen(3000, () => console.log("server started!"));
