@@ -34,7 +34,7 @@ app.use(express.json());
 // defining a users route and using it
 const usersRoute = require("./routes/users");
 app.use("/backend/users", usersRoute);
-app.use("/profile", express.static("images/profiles"));
+app.use("/backend/profile", express.static("images/profiles"));
 
 // defining a votings route and using it
 const votingsRoute = require("./routes/votings");
