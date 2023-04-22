@@ -26,26 +26,26 @@ const validDayTime = () => {
 const Voting = require("../models/voting");
 
 // getting voting or set
-router.post("/one", async (req, res) => {
-  const which = req.body;
-  let votingA;
+router.post("/one", async (req, res, next) => {
   try {
-    votingA = await Voting.find(which);
+    const query = req.body;
+    const votingA = await Voting.find(query);
+
     if (votingA.length === 0) {
-      try {
-        if (validDayTime()) {
-          const voting = new Voting(req.body);
-          const savedNew = await voting.save();
-          res.json({ success: true, status: "set", data: savedNew });
-        }
-      } catch (error) {
-        res.status(400).json({ message: error.message });
+      if (validDayTime()) {
+        const voting = new Voting(req.body);
+        const savedNew = await voting.save();
+        res
+          .status(201)
+          .json({ success: true, status: "created", data: savedNew });
+      } else {
+        res.status(400).json({ success: false, message: "Invalid date/time" });
       }
     } else {
       res.json({ success: true, status: "found", data: votingA[0] });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 });
 

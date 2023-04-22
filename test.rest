@@ -41,13 +41,23 @@ Content-Type: application/json
 # Voting *************************
 ###
 
-POST http://localhost:3000/votings/update
+POST http://localhost:3000/backend/votings/update
 Content-Type: application/json
 
 {
   "stock": "djia_voting",
   "day": "23-03-2023",
   "which": "down"
+}
+
+###
+
+POST http://localhost:3000/backend/votings/one
+Content-Type: application/json
+
+{
+  "stock": "djia_voting",
+  "day": "23-03-2023"
 }
 
 
