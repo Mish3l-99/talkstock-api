@@ -39,7 +39,7 @@ router.post("/one", async (req, res, next) => {
           .status(201)
           .json({ success: true, status: "created", data: savedNew });
       } else {
-        res.status(400).json({ success: false, message: "Invalid date/time" });
+        res.status(201).json({ success: false, message: "Invalid date/time" });
       }
     } else {
       res.json({ success: true, status: "found", data: votingA[0] });
